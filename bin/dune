@@ -1,0 +1,4 @@
+(executable
+ (public_name idris_ml)
+ (name main)
+ (libraries idris_ml))
