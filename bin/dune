@@ -2,4 +2,6 @@
  (public_name idrisc)
  (name idrisc)
  (modules idrisc)
- (libraries core idris_ml))
+ (libraries core idris_ml)
+ (preprocess
+  (pps ppx_jane)))
