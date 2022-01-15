@@ -22,7 +22,7 @@ rule read =
   | white
     { read lexbuf }
   | newline
-    { next_line lexbuf; read lexbuf }
+    { next_line lexbuf; NEWLINE }
   | "module"
     { MODULE }
   | ":"
@@ -31,6 +31,8 @@ rule read =
     { LPAREN }
   | ")"
     { RPAREN }
+  | "="
+    { EQ }
   | '"'
     { read_string (Buffer.create 17) lexbuf }
   | id

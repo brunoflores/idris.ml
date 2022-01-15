@@ -1,6 +1,8 @@
 (library
  (name idris_ml)
- (libraries menhirLib))
+ (libraries menhirLib)
+ (preprocess
+  (pps ppx_deriving.show)))
 
 (ocamllex
  (modules lexer))

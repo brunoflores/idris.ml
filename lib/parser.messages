@@ -10,3 +10,184 @@ prog: STRING
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
+prog: MODULE STRING
+##
+## Ends in an error in state: 1.
+##
+## prog -> MODULE . ID nonempty_list(NEWLINE) nonempty_list(dec) EOF [ # ]
+##
+## The known suffix of the stack is as follows:
+## MODULE
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: MODULE ID STRING
+##
+## Ends in an error in state: 2.
+##
+## prog -> MODULE ID . nonempty_list(NEWLINE) nonempty_list(dec) EOF [ # ]
+##
+## The known suffix of the stack is as follows:
+## MODULE ID
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: ID NEWLINE STRING
+##
+## Ends in an error in state: 3.
+##
+## nonempty_list(NEWLINE) -> NEWLINE . [ ID EOF ]
+## nonempty_list(NEWLINE) -> NEWLINE . nonempty_list(NEWLINE) [ ID EOF ]
+##
+## The known suffix of the stack is as follows:
+## NEWLINE
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: MODULE ID NEWLINE EOF
+##
+## Ends in an error in state: 5.
+##
+## prog -> MODULE ID nonempty_list(NEWLINE) . nonempty_list(dec) EOF [ # ]
+##
+## The known suffix of the stack is as follows:
+## MODULE ID nonempty_list(NEWLINE)
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 3, spurious reduction of production nonempty_list(NEWLINE) -> NEWLINE
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: ID STRING
+##
+## Ends in an error in state: 6.
+##
+## dec -> ID . option(optty) nonempty_list(NEWLINE) fundef [ ID EOF ]
+##
+## The known suffix of the stack is as follows:
+## ID
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: ID COLON STRING
+##
+## Ends in an error in state: 7.
+##
+## optty -> COLON . ty [ NEWLINE ]
+##
+## The known suffix of the stack is as follows:
+## COLON
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: ID COLON ID STRING
+##
+## Ends in an error in state: 8.
+##
+## ty -> ID . LPAREN RPAREN [ NEWLINE ]
+##
+## The known suffix of the stack is as follows:
+## ID
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: ID COLON ID LPAREN STRING
+##
+## Ends in an error in state: 9.
+##
+## ty -> ID LPAREN . RPAREN [ NEWLINE ]
+##
+## The known suffix of the stack is as follows:
+## ID LPAREN
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: ID COLON ID LPAREN RPAREN STRING
+##
+## Ends in an error in state: 13.
+##
+## dec -> ID option(optty) . nonempty_list(NEWLINE) fundef [ ID EOF ]
+##
+## The known suffix of the stack is as follows:
+## ID option(optty)
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: ID NEWLINE EOF
+##
+## Ends in an error in state: 14.
+##
+## dec -> ID option(optty) nonempty_list(NEWLINE) . fundef [ ID EOF ]
+##
+## The known suffix of the stack is as follows:
+## ID option(optty) nonempty_list(NEWLINE)
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 3, spurious reduction of production nonempty_list(NEWLINE) -> NEWLINE
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: ID NEWLINE ID STRING
+##
+## Ends in an error in state: 15.
+##
+## fundef -> ID . EQ exp [ ID EOF ]
+##
+## The known suffix of the stack is as follows:
+## ID
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: ID NEWLINE ID EQ STRING
+##
+## Ends in an error in state: 16.
+##
+## fundef -> ID EQ . exp [ ID EOF ]
+##
+## The known suffix of the stack is as follows:
+## ID EQ
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: ID NEWLINE ID EQ ID RPAREN
+##
+## Ends in an error in state: 17.
+##
+## exp -> ID . list(constant) nonempty_list(NEWLINE) [ ID EOF ]
+##
+## The known suffix of the stack is as follows:
+## ID
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+prog: ID NEWLINE ID EQ ID INT RPAREN
+##
+## Ends in an error in state: 22.
+##
+## list(constant) -> constant . list(constant) [ NEWLINE ]
+##
+## The known suffix of the stack is as follows:
+## constant
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
