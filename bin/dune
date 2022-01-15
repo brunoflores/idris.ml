@@ -1,4 +1,5 @@
 (executable
- (public_name idris_ml)
- (name main)
- (libraries idris_ml))
+ (public_name idrisc)
+ (name idrisc)
+ (modules idrisc)
+ (libraries core idris_ml))
