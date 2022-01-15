@@ -2,7 +2,9 @@ open Core
 module E = MenhirLib.ErrorReports
 module L = MenhirLib.LexerUtil
 module I = Idris_ml.Parser.MenhirInterpreter
+module Messages = Idris_ml.ParserMessages
 module Semant = Idris_ml.Semant
+module Gen = Idris_ml.Gen
 
 let print_position outx (lexbuf : Lexing.lexbuf) =
   let pos = lexbuf.lex_curr_p in
@@ -27,11 +29,23 @@ let get text checkpoint i =
   | Some (I.Element (_, _, pos1, pos2)) -> show text (pos1, pos2)
   | None -> ""
 
+let scheme code =
+  let command = Format.sprintf "echo '%s' > hello.ss" code in
+  let (_ : int) = Sys.command command in
+  let command = "echo '(compile-program \"hello.ss\")' | scheme -q" in
+  let (_ : int) = Sys.command command in
+  let command = "scheme -q --program hello.so" in
+  let (_ : int) = Sys.command command in
+  ()
+
 let succeed v =
   match v with
   | Some x -> (
       match Semant.transProg x with
-      | Ok () -> ()
+      | Ok () -> (
+          match Gen.code x with
+          | Ok code -> scheme code
+          | Error _ -> Format.printf "%s\n" "Error in code gen")
       | Error errs ->
           List.iter errs ~f:(fun (pos, s) ->
               match pos with
@@ -47,7 +61,7 @@ let fail text buffer checkpoint =
   (* Show the tokens just before and just after the error. *)
   let indication = sprintf "Syntax error %s.\n" (E.show (show text) buffer) in
   (* Fetch an error message from the database. *)
-  let message = Idris_ml.ParserMessages.message (state checkpoint) in
+  let message = Messages.message (state checkpoint) in
   (* Expand away the $i keywords that might appear in the message. *)
   let message = E.expand (get text checkpoint) message in
   (* Show these three components. *)
