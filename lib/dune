@@ -1,2 +1,10 @@
 (library
- (name idris_ml))
+ (name idris_ml)
+ (libraries core menhirLib))
+
+(ocamllex
+ (modules lexer))
+
+(menhir
+ (modules parser)
+ (flags --table --strict))
