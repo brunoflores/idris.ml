@@ -17,12 +17,7 @@ let env checkpoint =
 let state checkpoint : int =
   match I.top (env checkpoint) with
   | Some (I.Element (s, _, _, _)) -> I.number s
-  | None ->
-      (* Hmm... The parser is in its initial state. The incremental API
-           currently lacks a way of finding out the number of the initial
-           state. It is usually 0, so we return 0. This is unsatisfactory
-           and should be fixed in the future. *)
-      0
+  | None -> 0
 
 let show text positions =
   E.extract text positions |> E.sanitize |> E.compress |> E.shorten 20
@@ -30,20 +25,13 @@ let show text positions =
 let get text checkpoint i =
   match I.get i (env checkpoint) with
   | Some (I.Element (_, _, pos1, pos2)) -> show text (pos1, pos2)
-  | None ->
-      (* The index is out of range. This should not happen if [$i]
-           keywords are correctly inside the syntax error message
-           database. The integer [i] should always be a valid offset
-           into the known suffix of the stack. *)
-      "???"
+  | None -> ""
 
 let succeed v =
   match v with
   | Some x -> (
-      (* For debugging: *)
-      (* Format.printf "%a\n\n" Tiger.pp_exp x; *)
       match Semant.transProg x with
-      | Ok _ -> ()
+      | Ok () -> ()
       | Error errs ->
           List.iter errs ~f:(fun (pos, s) ->
               match pos with
